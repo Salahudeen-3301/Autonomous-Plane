@@ -4,9 +4,8 @@ Around 2-2.5 hours a week
 
 #Video of object detection model:
 
-<video src="[https://github.com/Salahudeen-3301/Autonomous-Plane/blob/main/Evidence/annotated_withPeople_169.mp4]" width="600"></video>
-
-![Alt text](https://github.com/Salahudeen-3301/Autonomous-Plane/blob/main/Evidence/annotated_withPeople_157.mp4)
+<video src="[https://github.com/user-attachments/assets/d8b4dc82-af5a-4147-a621-efe3dfcaafa6]" width="600"></video>
+<video src="[https://github.com/user-attachments/assets/f97d591f-1ac1-4d05-b0ef-6c3c5abeb44a]" width="600"></video>
 
 #Video of cutting foam parts for the plane:
 ![Alt text](https://github.com/Salahudeen-3301/Autonomous-Plane/blob/main/Evidence/WhatsApp%20Video%202025-12-13%20at%2015.00.45_54d0ab58.mp4)
