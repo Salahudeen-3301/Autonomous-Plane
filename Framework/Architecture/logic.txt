@@ -1,0 +1,6 @@
+Video feed --->  Python program ---> Mavlink ---> Ardupilot ----> Output
+                                     ^   |                           ^
+                                     |   |                           |
+                                     |   |-------------------------->
+                                     |
+                                  Remote Control   
