@@ -1,4 +1,3 @@
-# guided_tracking.py
 import cv2
 import time
 from dronekit import connect
