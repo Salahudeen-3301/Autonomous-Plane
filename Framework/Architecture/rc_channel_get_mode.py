@@ -28,7 +28,6 @@ def read_rc_channel(ch):
 while True:
   mode = get_mode()
   ch7 = read_rc_channel(7)   # channel 7 is the tracking switch
-  ch8 = read_rc_channel(8)   # channel 7 is the autonomous control switch
-  ch9 = read_rc_channel(9)   # channel 9 is the manned control switch
+  ch8 = read_rc_channel(8)   # channel 8 is the autonomous control switch
   print(f"Mode: {mode}, CH7: {ch7}, CH8: {ch8}")
   time.sleep(0.5)
