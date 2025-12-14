@@ -8,4 +8,5 @@ The resulting project is a culmination of 3 categories of work:
 
 The resulting project should create: An autonomous plane that "loiters" while following a pre-planned path until it detects a human. Once it detects a human, it tracks them, and delivers a small carepackage with water or a first aid kit. It can then send the co-ordinates back to the user.
 
-[RC Plane Parts.csv](https://github.com/user-attachments/files/24149641/RC.Plane.Parts.-.Sheet1.3.csv)
+[RC Plane Parts.csv](https://github.com/user-attachments/files/24149779/RC.Plane.Parts.-.Sheet1.4.csv)
+
