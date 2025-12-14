@@ -10,4 +10,7 @@ The resulting project should create: An autonomous plane that "loiters" while fo
 
 
 
-[RC Plane Parts.csv](https://github.com/user-attachments/files/24149917/RC.Plane.Parts.-.Sheet1.5.csv)
+
+
+[RC Plane Parts.csv](https://github.com/user-attachments/files/24149974/RC.Plane.Parts.-.Sheet1.6.csv)
+
