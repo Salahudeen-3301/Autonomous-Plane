@@ -1,6 +1,6 @@
 60 hours
 Started in June 2025
-Around 2-2.5 hours a week
+<br>Around 2-2.5 hours a week
 
 <br><br>#Video of object detection model:
 <br>https://github.com/Salahudeen-3301/Autonomous-Plane/blob/d276ffc6f09ef72f3b951e466d265074c81e8c14/Evidence/annotated_withPeople_157.mp4
