@@ -23,13 +23,7 @@ def detect_person(frame):
     Replace with your model inference; return (cx, cy, w, h) in pixels for the best person
     or None if no person detected.
     """
-    # --- naive color threshold placeholder (replace with real model) ---
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    # fake "detection" if bright center
-    h, w = gray.shape
-    mean = gray[h//3:2*h//3, w//3:2*w//3].mean()
-    if mean > 70:
-        return (w//2, h//2, w//3, h//3)
+    
     return None
 
 def clamp(v, lo, hi):
