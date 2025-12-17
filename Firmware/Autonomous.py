@@ -1,106 +1,160 @@
 import cv2
 import time
-from dronekit import connect
+from dronekit import connect, VehicleMode
 from yaw_utils import condition_yaw
+from Video_Track import Track
+from ultralytics import YOLO
 
 # ---------- CONFIG ----------
 CONNECTION_STR = "udp:127.0.0.1:14550"
-CAM_INDEX = 0            # 0 for USB; for CSI with libcamera you'd adapt capture
+CAM_INDEX = 0
 FRAME_W, FRAME_H = 416, 416
-TRACKING_CH = 7        # RC channel used as tracking enable switch
-AUTONOMOUS_CH = 8      # RC channel used for autonomous following enable switch
-TRACKING_THRESHOLD = 1500
-K_heading = 20.0         # degrees per normalized x-error (tune)
-max_nudge_deg = 12.0     # maximum heading change per command
-detection_timeout_s = 2.0
-FORWARD_SPEED = 10       # m/s - keep plane moving (handled by plane)
-# ----------------------------
 
-def detect_person(frame):
-    """
-    Placeholder detector.
-    Replace with your model inference; return (cx, cy, w, h) in pixels for the best person
-    or None if no person detected.
-    """
-    
-    return None
+TRACKING_CH = 7          # RC channel for enabling tracking
+TRACKING_THRESHOLD = 1500
+
+K_heading = 20.0
+MAX_NUDGE_DEG = 12.0
+
+DETECTION_GRACE_S = 2.0      # brief loss tolerance
+LOITER_TIME_S = 180.0        # 3 minutes
+
+STATE_AUTO = "AUTO"
+STATE_TRACKING = "TRACKING"
+STATE_LOITERING = "LOITERING"
+model = YOLO("yolo11n.pt")
+# ----------------------------
 
 def clamp(v, lo, hi):
     return max(lo, min(hi, v))
 
+def detect_person(frame):
+    Track(frame)
+    return None
+
 def main():
     print("Connecting to vehicle...")
     vehicle = connect(CONNECTION_STR, wait_ready=True, heartbeat_timeout=30)
+
     cap = cv2.VideoCapture(CAM_INDEX)
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, FRAME_W)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, FRAME_H)
 
-    last_seen = 0
+    state = STATE_AUTO
+    last_seen_time = None
+    loiter_start_time = None
+
+    print("Starting autonomy state machine with RC gating")
+
     try:
         while True:
-            # 1) read flight mode and tracking switch
-            mode = vehicle.mode.name
-            ch_val = vehicle.channels.get(str(TRACKING_CH), None)
-            tracking_switch_on = (ch_val is not None and int(ch_val) > TRACKING_THRESHOLD)
-
-            # If not in GUIDED, do nothing (safe)
-            if mode != "GUIDED" or not tracking_switch_on:
-                # optional: reset timers
-                last_seen = 0
-                # Could optionally call a function to "hold heading" once
-                time.sleep(0.1)
-                continue
-
-            # 2) read camera frame
-            ret, frame = cap.read()
-            if not ret:
-                print("Camera read failed")
-                time.sleep(0.1)
-                continue
-
-            # 3) run detection
-            det = detect_person(frame)
             now = time.time()
-            if det is None:
-                # no detection
-                if last_seen == 0:
-                    last_seen = now  # start timeout
-                elif now - last_seen > detection_timeout_s:
-                    # lost target: go to LOITER (safe), then wait for pilot or reacquire
-                    print("Target lost -> switching to LOITER")
-                    vehicle.mode = vehicle.mode.mapping()['LOITER'] if hasattr(vehicle.mode, 'mapping') else 'LOITER'
-                    # Alternatively: vehicle.mode = VehicleMode("LOITER")
-                    last_seen = 0
+            mode = vehicle.mode.name
+
+            # Read RC channel for tracking
+            ch_val = vehicle.channels.get(str(TRACKING_CH), 0)
+            tracking_enabled = int(ch_val) > TRACKING_THRESHOLD
+
+            # ---------- AUTO (mission flying) ----------
+            if state == STATE_AUTO:
+                if mode != "AUTO":
+                    vehicle.mode = VehicleMode("AUTO")
+                    time.sleep(1)
                     continue
-                else:
-                    # short gap, hold heading
+
+                if not tracking_enabled:
+                    # Nothing else to do; keep flying mission
                     time.sleep(0.05)
                     continue
-            else:
-                # detected
-                last_seen = now
 
-                # compute center error
+                ret, frame = cap.read()
+                if not ret:
+                    continue
+
+                det = detect_person(frame)
+                if det is not None:
+                    print("Human detected -> switching to GUIDED")
+                    vehicle.mode = VehicleMode("GUIDED")
+                    state = STATE_TRACKING
+                    last_seen_time = now
+                    time.sleep(1)
+
+            # ---------- TRACKING (GUIDED) ----------
+            elif state == STATE_TRACKING:
+                if mode != "GUIDED":
+                    print("GUIDED exited by pilot -> returning to AUTO")
+                    state = STATE_AUTO
+                    continue
+
+                if not tracking_enabled:
+                    print("Tracking switch OFF -> resuming AUTO")
+                    vehicle.mode = VehicleMode("AUTO")
+                    state = STATE_AUTO
+                    continue
+
+                ret, frame = cap.read()
+                if not ret:
+                    continue
+
+                det = detect_person(frame)
+                if det is None:
+                    # No detection
+                    if last_seen_time and (now - last_seen_time > DETECTION_GRACE_S):
+                        print("Target lost -> switching to LOITER")
+                        vehicle.mode = VehicleMode("LOITER")
+                        state = STATE_LOITERING
+                        loiter_start_time = now
+                        time.sleep(1)
+                    continue
+
+                # Target detected
+                last_seen_time = now
                 cx, cy, bw, bh = det
-                err_x_norm = (cx - (FRAME_W/2)) / (FRAME_W/2)    # -1..1
 
-                # compute heading nudge
-                nudge_deg = K_heading * err_x_norm
-                nudge_deg = clamp(nudge_deg, -max_nudge_deg, max_nudge_deg)
+                # Compute horizontal error
+                err_x = (cx - FRAME_W / 2) / (FRAME_W / 2)
+                nudge = clamp(K_heading * err_x, -MAX_NUDGE_DEG, MAX_NUDGE_DEG)
 
-                # send relative yaw nudge (relative=True)
-                print(f"Detected: err={err_x_norm:.2f}, nudge={nudge_deg:.2f} deg")
-                condition_yaw(vehicle, nudge_deg, yaw_rate=5, relative=True)
+                # Send relative yaw nudge
+                print(f"Tracking: err={err_x:.2f}, nudge={nudge:.2f}")
+                condition_yaw(vehicle, nudge, yaw_rate=5, relative=True)
 
-                # small sleep — controls command rate
                 time.sleep(0.2)
+
+            # ---------- LOITERING ----------
+            elif state == STATE_LOITERING:
+                if mode != "LOITER":
+                    vehicle.mode = VehicleMode("LOITER")
+                    time.sleep(1)
+                    continue
+
+                ret, frame = cap.read()
+                if ret and tracking_enabled:
+                    det = detect_person(frame)
+                    if det is not None:
+                        print("Target reacquired -> GUIDED")
+                        vehicle.mode = VehicleMode("GUIDED")
+                        state = STATE_TRACKING
+                        last_seen_time = now
+                        time.sleep(1)
+                        continue
+
+                if now - loiter_start_time > LOITER_TIME_S or not tracking_enabled:
+                    print("Loiter timeout or tracking disabled -> resuming AUTO")
+                    vehicle.mode = VehicleMode("AUTO")
+                    state = STATE_AUTO
+                    time.sleep(1)
+
+            time.sleep(0.05)
 
     except KeyboardInterrupt:
         print("User interrupt")
+
     finally:
         print("Closing")
         cap.release()
         vehicle.close()
+
 
 if __name__ == "__main__":
     main()
