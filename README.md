@@ -2,8 +2,8 @@
 After a mountain rescue I experiences where I got lost from my hiking group, and eventually ran out of food and water, I thought having an autonomous plane that could locate lost hikers and deliver resources like food,, water, or first-aid kits, while communicating their location to rescue services could be a really cool project.
 
 The resulting project is a culmination of 3 categories of work:
-1. Developing and researching an object detection model and program optimized for human detection in search and rescue missions. This is the link to the research paper I'm writing about this: https://salahudeen.short.gy/evPQSI.
-2. Creating the body of the plane from an online tutorial. (Check notice at the end of the page)
+1. Developing and researching an object detection model and program optimized for human detection in search and rescue missions. This is the link to the research paper I'm writing about this: [https://salahudeen.short.gy/evPQSI.](https://salahudeen.short.gy/research)
+2. Creating the body of the plane from various online models and tutorials. (Check notice at the end of the page)
 3. Designing the hardware and logical framework.
 
 The resulting project should create: An autonomous plane that follows a pre-planned path while giving the user FPV(First Person View). Once they detect a human, it can deliver a small carepackage it is carrying with a servo controlled gripper- this can be: water, food, a first aid kit etc. It will then return to the user autonomously.
