@@ -1,6 +1,57 @@
-Video feed --->  Python program ---> Mavlink ---> Ardupilot ----> Output
-                                     ^   |                           ^
-                                     |   |                           |
-                                     |   |-------------------------->
-                                     |
-                                  Remote Control   
+                          ┌─────────────────────────┐
+                          │        Ground Station    │
+                          │                         │
+                          │  RC Transmitter         │
+                          │  Telemetry Radio (USB)  │
+                          │  FPV Video Receiver     │
+                          │  Screen / Goggles       │
+                          └──────────┬──────────────┘
+                                     │
+          ┌──────────────────────────┼──────────────────────────┐
+          │                          │                          │
+          ▼                          ▼                          ▼
+
+   RC CONTROL LINK            TELEMETRY LINK              FPV VIDEO LINK
+ (Manual Override)        (Mission Planner)            (Live Video Only)
+
+          │                          │                          │
+          ▼                          ▼                          ▼
+
+┌──────────────────────────────────────────────────────────────────────┐
+│                          AIRCRAFT (PLANE)                             │
+│                                                                      │
+│  ┌──────────────┐        ┌──────────────────┐                       │
+│  │  RC Receiver │───────▶│     Pixhawk Pro   │◀───── GPS + Compass   │
+│  └──────────────┘        │  (Autopilot)      │                       │
+│                           │                  │                       │
+│                           │  • Flight modes  │                       │
+│                           │  • Waypoints     │                       │
+│                           │  • Stabilization │                       │
+│                           │  • Camera trigger│                       │
+│                           └───────┬──────────┘                       │
+│                                   │                                  │
+│               ┌───────────────────┼───────────────────┐              │
+│               ▼                   ▼                   ▼              │
+│        Servos (Ail/Ele/Rud)     ESC → Motor        Telemetry Radio     │
+│                                                                      │
+│  ──────────────────────────────────────────────────────────────────  │
+│                                                                      │
+│              FPV VIDEO SYSTEM (NO PIXHAWK INVOLVEMENT)               │
+│                                                                      │
+│        ┌─────────────┐        ┌──────────────────┐                  │
+│        │ FPV Camera  │──────▶ │ Video Transmitter │───► Antenna      │
+│        └─────────────┘        └──────────────────┘                  │
+│                                                                      │
+│        (Powered by BEC / Regulator — NOT Pixhawk)                    │
+│                                                                      │
+│  ──────────────────────────────────────────────────────────────────  │
+│                                                                      │
+│  Power System                                                        │
+│  ┌──────────────┐                                                   │
+│  │ 4S LiPo      │                                                   │
+│  └─────┬────────┘                                                   │
+│        │                                                            │
+│   Power Module → Pixhawk                                            │
+│   BEC / DC-DC → FPV Camera + VTX                                    │
+│                                                                      │
+└──────────────────────────────────────────────────────────────────────┘
