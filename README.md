@@ -17,6 +17,6 @@ The resulting project should create: An autonomous plane that follows a pre-plan
 **This is the BOM file:**
 ![RC Plane Parts.csv](https://github.com/Salahudeen-3301/Autonomous-Plane/blob/2027c59ab0049c8f1afe39e73f9bbbeb082d965b/BOM.csv)
 
-#This is my progress on the body so far:
+# This is my progress on the body so far:
 ![Evidence/WhatsApp Image 2025-12-10 at 13.04.23_b8d89857.jpg](https://github.com/Salahudeen-3301/Autonomous-Plane/blob/a77e163be0bd46f7eec229bf3099b3bf106cca56/Evidence/WhatsApp%20Image%202025-12-10%20at%2013.04.23_b8d89857.jpg)
-**IMPORTANT NOTICE!!! I CANNOT COMPLETE THE BODY OF THE PLANE BEFORE SUBMISSION AS ELECTRONICS GO IN AND AROUND THE BODY OF THE PLANE, AND I NEED THEM BEFORE COMPLETEING IT. I COMPLETED AS MUCH AS POSSIBLE WITHOUT THE REQUIRED ELECTRONICS**
+# **IMPORTANT NOTICE!!! I CANNOT COMPLETE THE BODY OF THE PLANE BEFORE SUBMISSION AS ELECTRONICS GO IN AND AROUND THE BODY OF THE PLANE, AND I NEED THEM BEFORE COMPLETEING IT. I COMPLETED AS MUCH AS POSSIBLE WITHOUT THE REQUIRED ELECTRONICS**
