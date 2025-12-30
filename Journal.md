@@ -18,5 +18,5 @@ Started in June 2025
 
 <br><br>
 # Current status of the plane:
-<br>![Alt text](https://github.com/Salahudeen-3301/Autonomous-Plane/blob/main/Evidence/WhatsApp%20Image%202025-12-10%20at%2013.04.23_b8d89857.jpg)
+<br>![Plane](https://github.com/Salahudeen-3301/Autonomous-Plane/blob/main/Evidence/WhatsApp%20Image%202025-12-10%20at%2013.04.23_b8d89857.jpg)
 
