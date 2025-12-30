@@ -10,7 +10,7 @@ Started in June 2025
 
 <br><br>
 # Video of cutting foam parts for the plane:
-<br>https://github.com/Salahudeen-3301/Autonomous-Plane/blob/main/Evidence/WhatsApp%20Video%202025-12-13%20at%2015.00.45_54d0ab58.mp4
+<br>[Creating Plane](https://github.com/Salahudeen-3301/Autonomous-Plane/blob/main/Evidence/WhatsApp%20Video%202025-12-13%20at%2015.00.45_54d0ab58.mp4)
 <br><br>
 
 <br><br>
