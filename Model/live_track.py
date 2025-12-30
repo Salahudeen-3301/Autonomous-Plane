@@ -1,4 +1,4 @@
-
+#Uses Camera to detect humans in the frame
 
 from ultralytics import YOLO
 import cv2
@@ -59,3 +59,4 @@ while True:
 
 cap.release()
 cv2.destroyAllWindows()
+
