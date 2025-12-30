@@ -4,8 +4,11 @@ Started in June 2025
 
 <br><br>
 # Video of object detection model:
-<br>https://github.com/Salahudeen-3301/Autonomous-Plane/blob/d276ffc6f09ef72f3b951e466d265074c81e8c14/Evidence/annotated_withPeople_157.mp4
-<br>https://github.com/Salahudeen-3301/Autonomous-Plane/blob/main/Evidence/annotated_withPeople_169.mp4
+<br>![Testing 1](https://github.com/Salahudeen-3301/Autonomous-Plane/blob/420397d59300607d26527baa3af6e063f8cd1d69/Evidence/Testing%20Object%20Detection.mp4)
+<br>![Testing 2](https://github.com/Salahudeen-3301/Autonomous-Plane/blob/420397d59300607d26527baa3af6e063f8cd1d69/Evidence/Testing%20Object%20Detection%201.mp4)
+<br>![Testing 3](https://github.com/Salahudeen-3301/Autonomous-Plane/blob/420397d59300607d26527baa3af6e063f8cd1d69/Evidence/Testing%20Object%20Detection%202.mp4)
+
+
 
 <br><br>
 # Video of cutting foam parts for the plane:
