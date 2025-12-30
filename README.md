@@ -1,5 +1,5 @@
 # Autonomous-Plane
-After a mountain rescue I experiences where I got lost from my hiking group, and eventually ran out of food and water, I thought having an autonomous plane that could locate lost hikers and deliver resources like food,, water, or first-aid kits, while communicating their location to rescue services could be a really cool project.
+After a mountain rescue I experiences where I got lost from my hiking group, and eventually ran out of food and water, I thought having an autonomous plane that could locate lost hikers and deliver resources like food, water, or first-aid kits, all while communicating their location to rescue services could be a really cool project.
 
 ## **The resulting project is a culmination of 3 categories of work:**
 1. Developing and researching an object detection model and program optimized for human detection in search and rescue missions. This is the link to the research paper I'm writing about this: [https://salahudeen.short.gy/evPQSI.](https://salahudeen.short.gy/research)
