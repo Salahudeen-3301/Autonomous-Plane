@@ -11,7 +11,7 @@ The resulting project should create: An autonomous plane that follows a pre-plan
 ## **This is the plane design, I am compiling the design based on parts from multiple online sources:**
 ![F22-Raptor](Evidence/F22-Raptor.jpg)
 
-## **This is the wiring diagram that will allow both manned and autonomous flight:**
+## **This is the wiring diagram that will allow both manned and autonomous FPV flight:**
 ![Wiring-diagram](https://github.com/Salahudeen-3301/Autonomous-Plane/blob/8ee29b3ebc09e128e8f014de859c166fcfeff789/Framework/Hardware/Wiring%20diagram.png)
 
 ## **This is the BOM file:**
